@@ -1,8 +1,8 @@
 <template>
   <li @click="serverSelected" class="list-group-item">
-    Server #{{ id }}
+    Server #{{ server.id }}
     <br>
-    Status: {{ status }}
+    Status: {{ server.status }}
   </li>
 </template>
 
@@ -11,15 +11,14 @@ import { eventBus } from "../../main.js";
 
 export default {
   props: {
-    id: {
-      type: Number,
+    server: {
+      type: Object,
       required: true
-    },
-    status: String
+    }
   },
   methods: {
     serverSelected() {
-      eventBus.$emit("serverWasClicked", { id: this.id, status: this.status });
+      eventBus.$emit("serverWasClicked", this.server);
     }
   }
 };

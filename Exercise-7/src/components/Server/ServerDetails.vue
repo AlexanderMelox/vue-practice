@@ -1,12 +1,13 @@
 <template>
   <div class="col-xs-12 col-sm-6">
-    <template v-if="Object.keys(server).length === 0">
-      <p>Server Details are currently not updated</p>
+    <template v-if="!server">
+      <p>Please select a server</p>
     </template>
     <template v-else>
-      <p>Server ID: {{ server.id }}</p>
+      <p>Server#: {{ server.id }}</p>
       <p>Server Status: {{ server.status }}</p>
-      <button @click="changeServerStatus">Change status</button>
+      <hr>
+      <button class="btn btn-primary" @click="changeServerStatus">Change status</button>
     </template>
   </div>
 </template>
@@ -17,15 +18,12 @@ import { eventBus } from "../../main.js";
 export default {
   data: function() {
     return {
-      server: {}
+      server: null
     };
   },
   methods: {
     changeServerStatus() {
-      eventBus.$emit("statusWasUpdated", {
-        id: this.server.id,
-        status: "Normal"
-      });
+      this.server.status = "Normal";
     }
   },
   created() {
